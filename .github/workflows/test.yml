@@ -34,13 +34,11 @@ jobs:
           coverage: xdebug #optional, setup coverage driver
 
       - name: Composer install
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: composer install
+        run: |
+          composer config github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+          composer install
 
       - name: Install compatibility-with-php8-to-phpunit-7
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ matrix.php == '8.0' }}
         run: |
           composer config --unset platform
